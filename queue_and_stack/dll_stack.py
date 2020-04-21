@@ -9,6 +9,7 @@ class Stack:
     def __init__(self):
         self.size = 0
         # Why is our DLL a good choice to store our elements?
+        # A: In real world cases, Linked Lists can be used to create queues and stacks
         self.storage = DoublyLinkedList()
 
 # Add item to the end
