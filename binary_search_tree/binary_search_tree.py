@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../queue_and_stack')
-#from dll_queue import Queue
-#from dll_stack import Stack
+# from dll_queue import Queue
+# from dll_stack import Stack
 
 
 class BinarySearchTree:
@@ -21,7 +21,7 @@ class BinarySearchTree:
             else:
                 # We've found a valid parking spot
                 self.left = BinarySearchTree(value)
-        #otherwise, value >= self.value
+        # otherwise, value >= self.value
         else:
             if self.right:
                 self.right.insert(value)
@@ -39,7 +39,7 @@ class BinarySearchTree:
             # if target is less than value, check left side
             if target < self.value:
                 # Have to verify there is a left child
-                if self.left is not None:
+                if self.left:
                     # Check left child with recursion
                     return self.left.contains(target)
                 # If no left child, false
@@ -48,7 +48,7 @@ class BinarySearchTree:
             # otherwise, target is greater than value, check right side
             else:
                 # HAve to verify there is a right child
-                if self.right is not None:
+                if self.right:
                     # If so, check if equals our target with recursion
                     return self.right.contains(target)
                 else:
@@ -89,15 +89,24 @@ class BinarySearchTree:
     # Hint:  Use a recursive, depth first traversal
 
     def in_order_print(self, node):
-        pass
+        # Want to keep going most left and in depth because that will be lowest number
+        if node.left:
+            # If there is a left, recursively continue
+            self.left.in_order_print(node.left)
+        # Want to print value if cannot go left
+        print(node.value)
+        # Once printed that value, we can check right side, also recursively will check if has left or print value
+        if node.right:
+            self.right.in_order_print(node.right)
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative breadth first traversal
+# Print the value of every node, starting with the given node,
+# in an iterative breadth first traversal
+
     def bft_print(self, node):
         pass
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative depth first traversal
+ # Print the value of every node, starting with the given node,
+# in an iterative depth first traversal
     def dft_print(self, node):
         pass
 
