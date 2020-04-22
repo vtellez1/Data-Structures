@@ -14,7 +14,7 @@ class LRUCache:
         self.limit = limit
         self.size = 0
         self.order = DoublyLinkedList()
-        self.storage = dict()
+        self.storage = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -25,10 +25,15 @@ class LRUCache:
     """
 
     def get(self, key):
+        # Check if key-value exists
         if key in self.storage:
-            self.order.move_to_front(key)
-            return self.storage[key].value
+            # Moves pair to head so considederd most recent.
+            node = self.storage[key]
+            self.order.move_to_front(node)
+            # return value associated with key
+            return node.value[1]
         else:
+            # Returns None if key-value doesn't exist
             return None
 
     """
@@ -45,4 +50,23 @@ class LRUCache:
     """
 
     def set(self, key, value):
-        pass
+        # Check to see if key already exists
+        # If exists,
+        if key in self.storage:
+            # overwrite old value with the key with newly-specified value
+            node = self.storage[key]
+            node.value = (key, value)
+            # and move to front
+            self.order.move_to_front(node)
+            return node
+
+        # If does not exist, check if cache is at max capacity.
+        # If at max capacity, remove tail. Have to remove from storage and list
+        if self.size == self.limit:
+            self.storage.pop(self.order.remove_from_tail()[0])
+            self.size -= 1
+    # If not at max capacity
+    # Add to cache as head
+        self.order.add_to_head((key, value))
+        self.storage[key] = self.order.head
+        self.size += 1
