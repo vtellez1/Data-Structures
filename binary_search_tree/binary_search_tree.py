@@ -1,3 +1,4 @@
+from collections import deque
 import sys
 sys.path.append('../queue_and_stack')
 # from dll_queue import Queue
@@ -83,10 +84,41 @@ class BinarySearchTree:
         else:
             None
 
-    # DAY 2 Project -----------------------
+# IN CLASS:
 
-    # Print all the values in order from low to high
-    # Hint:  Use a recursive, depth first traversal
+    def depth_first_iterative_for_each(self, cb):
+        stack = []
+    # add the root of the tree to the stack
+        stack.append(self)
+    # loop so long as the stack still has elements
+        while len(stack) > 0:
+            current_node = stack.pop()
+      # check if the right child exists
+            if current_node.right:
+                stack.append(current_node.right)
+      # check if the left child exists
+            if current_node.left:
+                stack.append(current_node.left)
+            cb(current_node.value)
+
+    def breadth_first_iterative_for_each(self, cb):
+        # depth-first : stack
+        # breadth-first : queue
+        q = deque()
+        q.append(self)
+
+        while len(q) > 0:
+            current_node = q.popleft()
+            if current_node.left:
+                q.append(current_node.left)
+            if current_node.right:
+                q.append(current_node.right)
+            cb(current_node.value)
+
+# DAY 2 Project -----------------------
+
+ # Print all the values in order from low to high
+ # Hint:  Use a recursive, depth first traversal
 
     def in_order_print(self, node):
         # Want to keep going most left and in depth because that will be lowest number
@@ -100,20 +132,41 @@ class BinarySearchTree:
             self.right.in_order_print(node.right)
 
 # Print the value of every node, starting with the given node,
-# in an iterative breadth first traversal
+# in an iterative DEPTH first traversal LIFO-Stack
+
+    def dft_print(self, node):
+        stack = []
+        stack.append(self)
+        while len(stack) > 0:
+            current_node = stack.pop()
+            if current_node.right:
+                stack.append(current_node.right)
+            if current_node.left:
+                stack.append(current_node.left)
+            print(current_node.value)
+
+# Print the value of every node, starting with the given node,
+# in an iterative BREADTH first traversal FIFO-Queue
 
     def bft_print(self, node):
-        pass
+        q = deque()
+        q.append(self)
 
- # Print the value of every node, starting with the given node,
-# in an iterative depth first traversal
-    def dft_print(self, node):
-        pass
+        while len(q) > 0:
+            current_node = q.popleft()
+            if current_node.left:
+                q.append(current_node.left)
+            if current_node.right:
+                q.append(current_node.right)
+            print(current_node.value)
 
-    # STRETCH Goals -------------------------
-    # Note: Research may be required
 
-    # Print Pre-order recursive DFT
+# STRETCH Goals -------------------------
+# Note: Research may be required
+
+# Print Pre-order recursive DFT
+
+
     def pre_order_dft(self, node):
         pass
 
